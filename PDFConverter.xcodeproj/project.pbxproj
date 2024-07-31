@@ -45,6 +45,7 @@
 		5188FAF22C5AA563007D4083 /* PDFConverterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PDFConverterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5188FAF62C5AA563007D4083 /* PDFConverterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFConverterUITests.swift; sourceTree = "<group>"; };
 		5188FAF82C5AA563007D4083 /* PDFConverterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFConverterUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5188FB052C5AD248007D4083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +96,7 @@
 		5188FAD92C5AA563007D4083 /* PDFConverter */ = {
 			isa = PBXGroup;
 			children = (
+				5188FB052C5AD248007D4083 /* Info.plist */,
 				5188FADA2C5AA563007D4083 /* PDFConverterApp.swift */,
 				5188FADC2C5AA563007D4083 /* ContentView.swift */,
 				5188FADE2C5AA563007D4083 /* Assets.xcassets */,
@@ -421,12 +423,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PDFConverter/PDFConverter.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PDFConverter/Preview Content\"";
+				DEVELOPMENT_TEAM = KDNN3473S3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PDFConverter/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -446,12 +451,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PDFConverter/PDFConverter.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PDFConverter/Preview Content\"";
+				DEVELOPMENT_TEAM = KDNN3473S3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PDFConverter/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
