@@ -12,6 +12,7 @@ struct ContentView: View {
     @State var fileURL: URL?
     
     @State private var pdfs: [Pdf] = []
+    @State private var downloadMessage: String = ""
 
     var body: some View {
         VStack {
@@ -33,10 +34,18 @@ struct ContentView: View {
                 convertToPDF()
             }.padding()
             List(pdfs, id: \.id) { pdf in
-                Text(pdf.filename)
+                HStack {
+                    Text(pdf.filename)
+                    Image(systemName: "square.and.arrow.down.fill").imageScale(.small).onTapGesture {
+                        downloadPDF(id: pdf.id)
+                    }
+                }
             }.onAppear(perform: {
                 fetchPDFs()
             })
+            Text(downloadMessage)
+                .foregroundColor(.red)
+                .padding()
         }
         .padding()
     }
@@ -66,7 +75,8 @@ struct ContentView: View {
         context.endPDFPage()
         context.closePDF()
         // Save the PDF to the desktop
-        let saveURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Desktop/\(filename).pdf")
+        let filenameWithoutPathExtension = imageURL.deletingPathExtension().lastPathComponent
+        let saveURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Desktop/\(filenameWithoutPathExtension).pdf")
         pdfData.write(to: saveURL, atomically: true)
         print("PDF Data size: \(pdfData.length) bytes")
         print("PDF saved to: \(saveURL)")
@@ -100,7 +110,7 @@ struct ContentView: View {
             if let responseString = String(data: responseData, encoding: .utf8) {
                 print("Response: \(responseString)")
             }
-            // Optionally: fetch updated PDFs list after upload
+            
             fetchPDFs()
         }.resume()
     }
@@ -140,6 +150,40 @@ struct ContentView: View {
                 }
             } else if let error = error {
                 print("HTTP Request Failed \(error)")
+            }
+        }.resume()
+    }
+    
+    func downloadPDF(id: Int) {
+        guard let url = URL(string: "http://localhost:8080/pdf/\(id)") else {
+            print("Invalid URL")
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                do {
+                    let documentsURL = try FileManager.default.url(
+                        for: .downloadsDirectory,
+                        in: .userDomainMask,
+                        appropriateFor: nil,
+                        create: false
+                    )
+                    let fileName = response?.suggestedFilename ?? "downloaded.pdf"
+                    let fileURL = documentsURL.appendingPathComponent(fileName)
+                    try data.write(to: fileURL)
+                    DispatchQueue.main.async {
+                        self.downloadMessage = "PDF downloaded to: \(fileURL.path)"
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.downloadMessage = "Failed to save PDF: \(error.localizedDescription)"
+                    }
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    self.downloadMessage = "Download error: \(error.localizedDescription)"
+                }
             }
         }.resume()
     }
